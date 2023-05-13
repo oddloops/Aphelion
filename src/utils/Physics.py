@@ -1,9 +1,12 @@
+import math
+
 class Physics:
     # Constants
     G = 6.67430e-11 # Gravitational Constant (m^3/kg/s^2)
+    days_in_secs = 24 * 60.0 * 60.0
 
     # Equations
-    @classmethod
+    @staticmethod
     def change_in_velocity (acceleration, delta_time):
         """
         Calculate the velocity after delta time (dv = a * dt)
@@ -17,7 +20,7 @@ class Physics:
         """
         return acceleration * delta_time
 
-    @classmethod
+    @staticmethod
     def change_in_displacement (velocity, delta_velocity, delta_time):
         """
         Calculate the change of displacement (dd = (v + dv) * dt)
@@ -32,7 +35,7 @@ class Physics:
         """
         return (velocity + delta_velocity) * delta_time
     
-    @classmethod
+    @staticmethod
     def newton_second_law(mass, acceleration):
         """
         Calculate force using Newon's Second Law (F = ma)
@@ -45,21 +48,6 @@ class Physics:
             float: The force applied to the object in Newtons (N)
         """
         return mass * acceleration
-
-    @classmethod
-    def gravitational_acceleration(cls, mass, r):
-        """
-        Calculates the gravitational acceration of a celestial body (GM/r^2)
-
-        Args:
-            G (float): Gravitational Constant
-            mass (float): Mass of the object exerting gravitational force (kg)
-            r (float): Distance between object and center of object exerting the gravitational force center (m)
-
-        Return:
-            float: Gravitational acceleration (m/s^2)
-        """
-        return cls.G * mass / r ** 2
 
     @classmethod
     def law_of_universial_gravitation(cls, mass1, mass2, r):
@@ -80,3 +68,30 @@ class Physics:
             It can be overridden by setting the class attribute `G` to a different value explicitly before calling this method.
         """
         return cls.G * (mass1 * mass2) / (r**2)
+    
+        @classmethod
+        def gravitational_acceleration(cls, mass, r):
+            """
+            Calculates the gravitational acceration of a celestial body (GM/r^2)
+
+            Args:
+                G (float): Gravitational Constant
+                mass (float): Mass of the object exerting gravitational force (kg)
+                r (float): Distance between object and center of object exerting the gravitational force center (m)
+
+            Return:
+                float: Gravitational acceleration (m/s^2)
+            """
+            return cls.G * mass / r ** 2
+
+        @classmethod
+        def escape_velocity(cls, mass, r):
+            """
+            Calculates the escape velocity of a celestial body (Sqrt(2GM / r))
+
+            Args:
+                G (float): Gravitational Constant
+                mass (float): Mass of the attracting object
+                r (float): Radius of the attracting object
+            """
+            return math.sqrt(2 * cls.G * m / r)
