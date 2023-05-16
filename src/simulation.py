@@ -2,13 +2,19 @@ from models.Planet import Planet
 from models.Star import Star
 from utils.Physics import Physics
 
+import matplotlib.pyplot as plt
+from matplotlib import animation
+
 # Celestial Bodies
 earth = Planet(5.972e24, 6.371e6)
 sun = Star(1.989e30, 6.957e8, 3.828e+29, 5773.15)
 
+AU = 1.5e11  # meters
+
 # Constants for Earth Sun
 average_earth_sun_distance = 1.496e11
-earth_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, earth.mass, average_earth_sun_distance)
+earth_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, earth.mass, 1) # using radius during simulation calculation
+print(earth_gravitational_constant)
 earth_aphelion = 1.521e11 # Farthest Earth to Sun distance (1.017 Astronomical Unit)
 earth_velocity_aphelion = 29290
 earth_eccentricity = 0.01671
@@ -27,18 +33,19 @@ earth_velocity_x, earth_velocity_y, earth_velocity_z = 0, earth_velocity_aphelio
 time = 0
 delta_time = 1 * Physics.days_in_secs # frames move in this time
 
+# Positions of Celestial Bodies
 sun_x_list, sun_y_list, sun_z_list = [], [], []
 earth_x_list, earth_y_list, earth_z_list = [], [], []
 
 # Start simulation
-while time < 1 * 364 * Physics.days_in_secs:
+while time < 1 * 365 * Physics.days_in_secs:
     ###### The Earth #######
     # For Earth, compute G force on Earth
     radius_x, radius_y, radius_z = earth_x - sun_x, earth_y - sun_y, earth_z - sun_z
-    mag_vector_3 = (radius_x ** 2 + radius_y ** 2 + radius_z ** 2) ** 1.5
-    force_earth_x = -earth_gravitational_constant * radius_x / mag_vector_3
-    force_earth_y = -earth_gravitational_constant * radius_y / mag_vector_3
-    force_earth_z = -earth_gravitational_constant * radius_z / mag_vector_3
+    magnitude_vector_3 = (radius_x ** 2 + radius_y ** 2 + radius_z ** 2) ** 1.5   # magnitude of vector
+    force_earth_x = -earth_gravitational_constant * radius_x / magnitude_vector_3
+    force_earth_y = -earth_gravitational_constant * radius_y / magnitude_vector_3
+    force_earth_z = -earth_gravitational_constant * radius_z / magnitude_vector_3
 
     # Update quantities (F = ma -> a = F / m)
     earth_velocity_x += force_earth_x * delta_time / earth.mass
@@ -73,47 +80,47 @@ while time < 1 * 364 * Physics.days_in_secs:
     # Update delta time
     time += delta_time
 
-print(earth_x_list)
-
-import matplotlib.pyplot as plt
-from matplotlib import animation
-
+# Grab and animate the simulation
 fig, ax = plt.subplots(figsize=(10,10))
 ax.set_aspect('equal')
 ax.grid()
 
-line_e,     = ax.plot([],[],'-g',lw=1,c='blue')
-point_e,    = ax.plot([earth_aphelion], [0], marker="o"
-                      , markersize=4
-                      , markeredgecolor="blue"
-                      , markerfacecolor="blue")
-text_e      = ax.text(earth_aphelion,0,'Earth')
+# Earth object
+earth_color = "#2C7BB6" # hex code for greenish blue
+line_earth, = ax.plot([], [], '-g', lw=1, c='blue')
+point_earth, = ax.plot([earth_aphelion], [0], marker="o"
+                , markersize=6
+                , markeredgecolor="blue"
+                , markerfacecolor="blue")
+text_earth = ax.text(earth_aphelion, 0,'Earth')
 
-point_s,    = ax.plot([0], [0], marker="o"
-                      , markersize=7
-                      , markeredgecolor="yellow"
-                      , markerfacecolor="yellow")
-text_s      = ax.text(0,0,'Sun')
+# Sun object
+point_sun, = ax.plot([0], [0], marker="o"
+                , markersize=18
+                , markeredgecolor="yellow"
+                , markerfacecolor="yellow")
+text_sun = ax.text(0, 0, 'Sun')
 
-exdata,eydata = [],[]                   # earth track
-sxdata,sydata = [],[]                   # sun track
+# Celestial Body Tracks
+earth_x_data, earth_y_data = [], []
+sun_x_data, sun_y_data = [], []
 
 def update(i):
-    exdata.append(earth_x_list[i])
-    eydata.append(earth_y_list[i])
+    earth_x_data.append(earth_x_list[i])
+    earth_y_data.append(earth_y_list[i])
     
-    line_e.set_data(exdata,eydata)
-    point_e.set_data(earth_x_list[i],earth_y_list[i])
-    text_e.set_position((earth_x_list[i],earth_y_list[i]))
+    line_earth.set_data(earth_x_data, earth_y_data)
+    point_earth.set_data(earth_x_list[i], earth_y_list[i])
+    text_earth.set_position((earth_x_list[i], earth_y_list[i]))
 
-    point_s.set_data(sun_x_list[i],sun_y_list[i])
-    text_s.set_position((sun_x_list[i],sun_y_list[i]))
+    point_sun.set_data(sun_x_list[i], sun_y_list[i])
+    text_sun.set_position((sun_x_list[i], sun_y_list[i]))
 
     ax.axis('equal')
-    ax.set_xlim(-2*earth_aphelion,2*earth_aphelion)
-    ax.set_ylim(-2*earth_aphelion,2*earth_aphelion)
+    ax.set_xlim(-2*earth_aphelion, 2*earth_aphelion)
+    ax.set_ylim(-2*earth_aphelion, 2*earth_aphelion)
 
-    return line_e,point_s,point_e,text_e,text_s
+    return line_earth, point_sun, point_earth, text_earth, text_sun
 
 anim = animation.FuncAnimation(fig
                                 ,func=update
