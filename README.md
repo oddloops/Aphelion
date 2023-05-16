@@ -1,2 +1,2 @@
-# Pale Blue Dot
+# Aphelion
  Solar System Simulator
