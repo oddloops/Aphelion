@@ -69,29 +69,29 @@ class Physics:
         """
         return cls.G * (mass1 * mass2) / (r**2)
     
-        @classmethod
-        def gravitational_acceleration(cls, mass, r):
-            """
-            Calculates the gravitational acceration of a celestial body (GM/r^2)
+    @classmethod
+    def gravitational_acceleration(cls, mass, r):
+        """
+        Calculates the gravitational acceration of a celestial body (G*M/r^2)
 
-            Args:
-                G (float): Gravitational Constant
-                mass (float): Mass of the object exerting gravitational force (kg)
-                r (float): Distance between object and center of object exerting the gravitational force center (m)
+        Args:
+            G (float): Gravitational Constant
+            mass (float): Mass of the object exerting gravitational force (kg)
+            r (float): Distance between object and center of object exerting the gravitational force center (m)
 
-            Return:
-                float: Gravitational acceleration (m/s^2)
-            """
-            return cls.G * mass / r ** 2
+        Return:
+            float: Gravitational acceleration (m/s^2)
+        """
+        return cls.G * mass / r ** 2
 
-        @classmethod
-        def escape_velocity(cls, mass, r):
-            """
-            Calculates the escape velocity of a celestial body (Sqrt(2GM / r))
+    @classmethod
+    def escape_velocity(cls, mass, r):
+        """
+        Calculates the escape velocity of a celestial body (Sqrt(2GM / r))
 
-            Args:
-                G (float): Gravitational Constant
-                mass (float): Mass of the attracting object
-                r (float): Radius of the attracting object
-            """
-            return math.sqrt(2 * cls.G * m / r)
+        Args:
+            G (float): Gravitational Constant
+            mass (float): Mass of the attracting object
+            r (float): Radius of the attracting object
+        """
+        return math.sqrt(2 * cls.G * mass / r)
