@@ -90,15 +90,16 @@ earth_color = "#2C7BB6" # hex code for greenish blue
 line_earth, = ax.plot([], [], '-g', lw=1, c='blue')
 point_earth, = ax.plot([earth_aphelion], [0], marker="o"
                 , markersize=6
-                , markeredgecolor="blue"
-                , markerfacecolor="blue")
+                , markeredgecolor=earth_color
+                , markerfacecolor=earth_color)
 text_earth = ax.text(earth_aphelion, 0,'Earth')
 
 # Sun object
+sun_color = "#F4F71C" # hex code for yellow-orange
 point_sun, = ax.plot([0], [0], marker="o"
                 , markersize=18
-                , markeredgecolor="yellow"
-                , markerfacecolor="yellow")
+                , markeredgecolor=sun_color
+                , markerfacecolor=sun_color)
 text_sun = ax.text(0, 0, 'Sun')
 
 # Celestial Body Tracks
