@@ -12,7 +12,7 @@ ax.grid()
 earth_color = "#2C7BB6"  # hex code for greenish blue
 line_earth, = ax.plot([], [], '-', lw=1, color="blue")
 point_earth, = ax.plot([], [], marker="o", markersize=6, markeredgecolor=earth_color, markerfacecolor=earth_color)
-text_earth = ax.text(earth_aphelion, 0, 'Earth')
+text_earth = ax.text(earth.aphelion, 0, 'Earth')
 
 # Sun object
 sun_color = "#F4F71C"  # hex code for yellow-orange
@@ -35,8 +35,8 @@ def update(i):
     text_sun.set_position((sun_x_list[i], sun_y_list[i]))
 
     ax.axis('equal')
-    ax.set_xlim(-2 * earth_aphelion, 2 * earth_aphelion)
-    ax.set_ylim(-2 * earth_aphelion, 2 * earth_aphelion)
+    ax.set_xlim(-2 * earth.aphelion, 2 * earth.aphelion)
+    ax.set_ylim(-2 * earth.aphelion, 2 * earth.aphelion)
 
     return line_earth, point_sun, point_earth, text_earth, text_sun
 
