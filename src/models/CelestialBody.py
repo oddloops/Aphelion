@@ -8,8 +8,6 @@ class CelestialBody(metaclass=abc.ABCMeta):
         Attributes:
             mass (float): The mass of the celestial body in kilograms (kg).
             radius (float): The radius of the celestial body in meters (m).
-            x (float): The x-coordinate of the celestial body's position in meters (m).
-            y (float): The y-coordinate of the celestial body's position in meters (m).
             
         Methods:
             get_escape_velocity(): Abstract method that returns the escape velocity of the celestial body.

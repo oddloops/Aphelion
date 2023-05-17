@@ -2,15 +2,16 @@ from utils.Physics import Physics
 from models.CelestialBody import CelestialBody
 
 class Planet(CelestialBody):
-    def __init__(self, mass, radius, satellites=0, rings=0):
+    def __init__(self, mass, radius, eccentricity, aphelion, aphelion_velocity, satellites=0, rings=0):
         """
         Class representing a planet.
         
         Attributes:
             mass (float): The mass of the planet in kilograms (kg).
             radius (float): The radius of the planet in meters (m).
-            x (float): The x-coordinate of the planet's position in meters (m).
-            y (float): The y-coordinate of the planet's position in meters (m).
+            eccentricity (float): The eccentricity of the planet's orbit.
+            aphelion (float): The distance from the planet to the Sun at its farthest point in meters (m).
+            aphelion_velocity (float): The velocity of the planet at its farthest point from the Sun in meters per second (m/s).
             satellites (int): The number of satellites (moons) the planet has.
             rings (int): The number of rings the planet has.
             
@@ -19,6 +20,10 @@ class Planet(CelestialBody):
             get_surface_gravity(): Returns the surface gravity of the planet.
         """
         super().__init__(mass, radius)
+        self.eccentricity = eccentricity
+        self.aphelion = aphelion
+        self.aphelion_velocity = aphelion_velocity
+        self.perihelion = aphelion * (1 - eccentricity)
         self.satellites = satellites
         self.rings = rings
 

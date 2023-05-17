@@ -8,14 +8,10 @@ class Star(CelestialBody):
 
     Attributes:
     -----------
-    mass : float
-        Mass of the star in kilograms (kg).
-    radius : float
-        Radius of the star in meters (m).
-    luminosity : float
-        Luminosity of the star in Watts (W). Default is 0.
-    temperature : float
-        Surface temperature of the star in Kelvin (K). Default is 0.
+    mass (float): Mass of the star in kilograms (kg).
+    radius (float): Radius of the star in meters (m).
+    luminosity (float): Luminosity of the star in Watts (W). Default is 0.
+    temperature (float): Surface temperature of the star in Kelvin (K). Default is 0.
     """
     def __init__(self, mass, radius, luminosity=0, temperature=0):
         super().__init__(mass, radius)
