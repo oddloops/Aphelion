@@ -10,8 +10,13 @@ ax.grid()
 
 # Mercury object
 line_mercury, = ax.plot([], [], '-', lw=1, color="brown")
-point_mercury, = ax.plot([], [], marker="o", markersize=6, markeredgecolor="brown", markerfacecolor="brown")
+point_mercury, = ax.plot([], [], marker="o", markersize=3, markeredgecolor="brown", markerfacecolor="brown")
 text_mercury = ax.text(mercury.aphelion, 0, 'Mercury')
+
+# Venus object
+line_venus, = ax.plot([], [], '-', lw=1, color="pink")
+point_venus, = ax.plot([], [], marker="o", markersize=5, markeredgecolor="pink", markerfacecolor="pink")
+text_venus = ax.text(venus.aphelion, 0, 'Venus')
 
 # Earth object
 earth_color = "#2C7BB6"  # hex code for greenish blue
@@ -33,6 +38,9 @@ def update(i):
     mercury_x_data.append(mercury_x_list[i])
     mercury_y_data.append(mercury_y_list[i])
 
+    venus_x_data.append(venus_x_list[i])
+    venus_y_data.append(venus_y_list[i])
+
     earth_x_data.append(earth_x_list[i])
     earth_y_data.append(earth_y_list[i])
 
@@ -42,6 +50,10 @@ def update(i):
     line_mercury.set_data(mercury_x_data, mercury_y_data)
     point_mercury.set_data(mercury_x_list[i:i+1], mercury_y_list[i:i+1])
     text_mercury.set_position((mercury_x_list[i], mercury_y_list[i]))
+
+    line_venus.set_data(venus_x_data, venus_y_data)
+    point_venus.set_data(venus_x_list[i:i+1], venus_y_list[i:i+1])
+    text_venus.set_position((venus_x_list[i], venus_y_list[i]))
 
     line_earth.set_data(earth_x_data, earth_y_data)
     point_earth.set_data(earth_x_list[i:i+1], earth_y_list[i:i+1])
@@ -58,7 +70,9 @@ def update(i):
     ax.set_xlim(-3 * AU, 3 * AU)
     ax.set_ylim(-3 * AU, 3 * AU)
 
-    return line_mercury, line_earth, line_mars, point_sun, point_mercury, point_earth, point_mars, text_sun, text_mercury, text_earth, text_mars
+    return line_mercury, line_venus, line_earth, line_mars,\
+           point_sun, point_mercury, point_venus, point_earth, point_mars, \
+           text_sun, text_mercury, text_venus, text_earth, text_mars
 
 anim = animation.FuncAnimation(fig, func=update, frames=len(earth_x_list), interval=1, blit=True)
 plt.show()

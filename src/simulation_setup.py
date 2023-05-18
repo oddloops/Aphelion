@@ -5,15 +5,17 @@ import math
 # Celestial Bodies
 sun = Star(1.989e30, 6.957e8, 3.828e29, 5773.15)
 mercury = Planet(3.30104e23, 2.4397e6, 0.20563593, 6.9818e10, 38860)
-earth = Planet(5.972e24, 6.371e6, 0.01671123, 1.521e11, 29290, 1)
+venus = Planet(4.8673e24, 6.0518e6, 0.00677672, 1.08941e11, 34780)
+earth = Planet(5.9722e24, 6.371e6, 0.01671123, 1.521e11, 29290, 1)
 mars = Planet(6.4169e23, 3.3895e6, 0.0933941, 2.49261e11, 21971, 2)
 
 AU = 1.5e11  # meters
 
 # Gravitational Constants
-mercury_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, mercury.mass, 1)
-earth_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, earth.mass, 1) # using radius during simulation calculation
-mars_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, mars.mass, 1)
+mercury_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, mercury.mass)
+venus_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, venus.mass)
+earth_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, earth.mass) # using radius during simulation calculation
+mars_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, mars.mass)
 
 # starting conditions
 # Sun
@@ -23,6 +25,10 @@ sun_velocity_x, sun_velocity_y, sun_velocity_z = 0, 0, 0
 # Mercury
 mercury_x, mercury_y, mercury_z = mercury.aphelion, 0, 0
 mercury_velocity_x, mercury_velocity_y, mercury_velocity_z = 0, mercury.min_orbit_velocity, 0
+
+# Venus
+venus_x, venus_y, venus_z = venus.aphelion, 0, 0
+venus_velocity_x, venus_velocity_y, venus_velocity_z = 0, venus.min_orbit_velocity, 0
 
 # Earth
 earth_x, earth_y, earth_z = earth.aphelion, 0, 0
@@ -39,6 +45,7 @@ delta_time = 1 * Physics.days_in_secs # frames move in this time
 # Positions of Celestial Bodies
 sun_x_list, sun_y_list, sun_z_list = [], [], []
 mercury_x_list, mercury_y_list, mercury_z_list = [], [], []
+venus_x_list, venus_y_list, venus_z_list = [], [], []
 earth_x_list, earth_y_list, earth_z_list = [], [], []
 mars_x_list, mars_y_list, mars_z_list = [], [], []
 
@@ -66,6 +73,29 @@ while time < 5 * 365 * Physics.days_in_secs:
     mercury_x_list.append(mercury_x)
     mercury_y_list.append(mercury_y)
     mercury_z_list.append(mercury_z)
+
+    ###### Venus ######
+    # Venus G force
+    venus_radius_x, venus_radius_y, venus_radius_z = venus_x - sun_x, venus_y - sun_y, venus_z - sun_z
+    venus_magnitude_vector_3 = (venus_radius_x ** 2 + venus_radius_y ** 2 + venus_radius_z ** 2) ** 1.5
+    force_venus_x = -venus_gravitational_constant * venus_radius_x / venus_magnitude_vector_3
+    force_venus_y = -venus_gravitational_constant * venus_radius_y / venus_magnitude_vector_3
+    force_venus_z = -venus_gravitational_constant * venus_radius_z / venus_magnitude_vector_3
+
+    # Update quantities (F = ma -> a = F / m)
+    venus_velocity_x += force_venus_x * delta_time / venus.mass
+    venus_velocity_y += force_venus_y * delta_time / venus.mass
+    venus_velocity_z += force_venus_z * delta_time / venus.mass
+
+    # Update position
+    venus_x += venus_velocity_x * delta_time
+    venus_y += venus_velocity_y * delta_time
+    venus_z += venus_velocity_z * delta_time
+
+    # Save position
+    venus_x_list.append(venus_x)
+    venus_y_list.append(venus_y)
+    venus_z_list.append(venus_z)
 
     ###### The Earth ######
     # For Earth, compute G force on Earth
@@ -133,6 +163,7 @@ while time < 5 * 365 * Physics.days_in_secs:
 
 # Celestial Body Tracks for simulation plot
 mercury_x_data, mercury_y_data = [], []
+venus_x_data, venus_y_data = [], []
 earth_x_data, earth_y_data = [], []
 mars_x_data, mars_y_data = [], []
 sun_x_data, sun_y_data = [], []
