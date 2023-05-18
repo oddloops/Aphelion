@@ -2,7 +2,7 @@ from utils.Physics import Physics
 from models.CelestialBody import CelestialBody
 
 class Planet(CelestialBody):
-    def __init__(self, mass, radius, eccentricity, aphelion, aphelion_velocity, satellites=0, rings=0):
+    def __init__(self, mass, radius, eccentricity, aphelion, min_orbit_velocity, satellites=0, rings=0):
         """
         Class representing a planet.
         
@@ -11,7 +11,7 @@ class Planet(CelestialBody):
             radius (float): The radius of the planet in meters (m).
             eccentricity (float): The eccentricity of the planet's orbit.
             aphelion (float): The distance from the planet to the Sun at its farthest point in meters (m).
-            aphelion_velocity (float): The velocity of the planet at its farthest point from the Sun in meters per second (m/s).
+            min_orbit_velocity (float): The velocity of the planet at its nearest point to the Sun in meters per second (m/s).
             satellites (int): The number of satellites (moons) the planet has.
             rings (int): The number of rings the planet has.
             
@@ -22,7 +22,7 @@ class Planet(CelestialBody):
         super().__init__(mass, radius)
         self.eccentricity = eccentricity
         self.aphelion = aphelion
-        self.aphelion_velocity = aphelion_velocity
+        self.min_orbit_velocity = min_orbit_velocity
         self.perihelion = aphelion * (1 - eccentricity)
         self.satellites = satellites
         self.rings = rings
