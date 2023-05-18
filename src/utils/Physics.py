@@ -50,7 +50,7 @@ class Physics:
         return mass * acceleration
 
     @classmethod
-    def law_of_universial_gravitation(cls, mass1, mass2, r):
+    def law_of_universial_gravitation(cls, mass1, mass2, r=1):
         """
         Calculate Newton's Law of Universial Gravitation (F=-G(Mm/r^2))
 
