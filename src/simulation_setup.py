@@ -1,7 +1,6 @@
 from models.Planet import Planet
 from models.Star import Star
 from utils.Physics import Physics
-import math
 
 AU = Physics.AU  # meters
 
@@ -12,9 +11,9 @@ venus = Planet(4.8673e24, 6.0518e6, 0.00677672, 1.08941e11, 34780)
 earth = Planet(5.9722e24, 6.371e6, 0.01671123, 1.521e11, 29290, 1)
 mars = Planet(6.4169e23, 3.3895e6, 0.0933941, 2.49261e11, 21971, 2)
 jupiter = Planet(1.89813e27, 6.9911e7, 0.04838624, 8.16363e11, 12440, 95, 3)
-saturn = Planet(5.6832e26, 5.8232e7, 0.05386179, 1.506527e9, 9140, 83, 7)
-# uranus = Planet()
-# neptune = Planet()
+saturn = Planet(5.6832e26, 5.8232e7, 0.05386179, 1.506527e12, 9140, 83, 7)
+uranus = Planet(8.68103e25, 2.5362e7, 0.04725744, 3.00139e12, 6490, 27, 13)
+neptune = Planet(1.0241e26, 2.4622e7, 0.00859048, 4.558857e12, 5370, 14, 5)
 
 # Gravitational Constants
 mercury_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, mercury.mass)
@@ -22,6 +21,9 @@ venus_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, v
 earth_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, earth.mass) # using radius during simulation calculation
 mars_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, mars.mass)
 jupiter_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, jupiter.mass)
+saturn_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, saturn.mass)
+uranus_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, uranus.mass)
+neptune_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, neptune.mass)
 
 # starting conditions
 # Sun
@@ -48,6 +50,18 @@ mars_velocity_x, mars_velocity_y, mars_velocity_z = 0, mars.min_orbit_velocity, 
 jupiter_x, jupiter_y, jupiter_z = jupiter.aphelion, 0, 0
 jupiter_velocity_x, jupiter_velocity_y, jupiter_velocity_z = 0, jupiter.min_orbit_velocity, 0
 
+# Saturn
+saturn_x, saturn_y, saturn_z = saturn.aphelion, 0, 0
+saturn_velocity_x, saturn_velocity_y, saturn_velocity_z = 0, saturn.min_orbit_velocity, 0
+
+# Uranus
+uranus_x, uranus_y, uranus_z = uranus.aphelion, 0, 0
+uranus_velocity_x, uranus_velocity_y, uranus_velocity_z = 0, uranus.min_orbit_velocity, 0
+
+# Neptune
+neptune_x, neptune_y, neptune_z = neptune.aphelion, 0, 0
+neptune_velocity_x, neptune_velocity_y, neptune_velocity_z = 0, neptune.min_orbit_velocity, 0
+
 # Time
 time = 0
 delta_time = 1 * Physics.days_in_secs # frames move in this time
@@ -59,9 +73,12 @@ venus_x_list, venus_y_list, venus_z_list = [], [], []
 earth_x_list, earth_y_list, earth_z_list = [], [], []
 mars_x_list, mars_y_list, mars_z_list = [], [], []
 jupiter_x_list, jupiter_y_list, jupiter_z_list = [], [], []
+saturn_x_list, saturn_y_list, saturn_z_list = [], [], []
+uranus_x_list, uranus_y_list, uranus_z_list = [], [], []
+neptune_x_list, neptune_y_list, neptune_z_list = [], [], []
 
 # Simulation data
-while time < 15 * 365 * Physics.days_in_secs:
+while time < 30 * 365 * Physics.days_in_secs:
     ###### Mercury ######
     # Mercury G force
     mercury_radius_x, mercury_radius_y, mercury_radius_z = mercury_x - sun_x, mercury_y - sun_y, mercury_z - sun_z
@@ -177,10 +194,33 @@ while time < 15 * 365 * Physics.days_in_secs:
     jupiter_y_list.append(jupiter_y)
     jupiter_z_list.append(jupiter_z)
 
+    ###### Saturn ######
+    # Saturn G force
+    saturn_radius_x, saturn_radius_y, saturn_radius_z = saturn_x - sun_x, saturn_y - sun_y, saturn_z - sun_z
+    saturn_magnitude_vector_3 = (saturn_radius_x ** 2 + saturn_radius_y ** 2 + saturn_radius_z ** 2) ** 1.5
+    force_saturn_x = -saturn_gravitational_constant * saturn_radius_x / saturn_magnitude_vector_3
+    force_saturn_y = -saturn_gravitational_constant * saturn_radius_y / saturn_magnitude_vector_3
+    force_saturn_z = -saturn_gravitational_constant * saturn_radius_z / saturn_magnitude_vector_3
+
+    # Update quantities (F = ma -> a = F / m)
+    saturn_velocity_x += force_saturn_x * delta_time / saturn.mass
+    saturn_velocity_y += force_saturn_y * delta_time / saturn.mass
+    saturn_velocity_z += force_saturn_z * delta_time / saturn.mass
+
+    # Update Earth position
+    saturn_x += saturn_velocity_x * delta_time
+    saturn_y += saturn_velocity_y * delta_time
+    saturn_z += saturn_velocity_z * delta_time
+
+    # Save the Earth position
+    saturn_x_list.append(saturn_x)
+    saturn_y_list.append(saturn_y)
+    saturn_z_list.append(saturn_z)
+
     ###### The Sun ######
-    sun_velocity_x += -(force_mercury_x + force_venus_x + force_earth_x + force_mars_x + force_jupiter_x) * delta_time / sun.mass
-    sun_velocity_y += -(force_mercury_y + force_venus_y + force_earth_y + force_mars_y + force_jupiter_y) * delta_time / sun.mass
-    sun_velocity_z += -(force_mercury_z + force_venus_z + force_earth_z + force_mars_z + force_jupiter_z) * delta_time / sun.mass
+    sun_velocity_x += -(force_mercury_x + force_venus_x + force_earth_x + force_mars_x + force_jupiter_x + force_saturn_x) * delta_time / sun.mass
+    sun_velocity_y += -(force_mercury_y + force_venus_y + force_earth_y + force_mars_y + force_jupiter_y + force_saturn_y) * delta_time / sun.mass
+    sun_velocity_z += -(force_mercury_z + force_venus_z + force_earth_z + force_mars_z + force_jupiter_z + force_saturn_z) * delta_time / sun.mass
 
     # Update Sun position
     sun_x += sun_velocity_x * delta_time
@@ -201,4 +241,5 @@ venus_x_data, venus_y_data = [], []
 earth_x_data, earth_y_data = [], []
 mars_x_data, mars_y_data = [], []
 jupiter_x_data, jupiter_y_data = [], []
+saturn_x_data, saturn_y_data = [], []
 sun_x_data, sun_y_data = [], []
