@@ -5,7 +5,12 @@ from simulation_setup import *
 
 # Grab and animate the simulation
 fig, ax = plt.subplots(figsize=(12, 8))
+fig.canvas.manager.set_window_title('Aphelion')
+fig.suptitle('Solar System Simulation', y = 0.9)
+
 ax.set_aspect('equal')
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
 ax.grid()
 
 # Mercury object
@@ -129,5 +134,17 @@ def update(i):
            point_sun, point_mercury, point_venus, point_earth, point_mars, point_jupiter, point_saturn, point_uranus, point_neptune, \
            text_sun, text_mercury, text_venus, text_earth, text_mars, text_jupiter, text_saturn, text_uranus, text_neptune
 
+
+# box = ax.get_position()
+# ax.set_position([box.x0, box.y0 + box.height * 0.1,
+#                  box.width, box.height * 0.9])
+ax.legend(
+    [point_sun, point_mercury, point_venus, point_earth, point_mars, point_jupiter, point_saturn, point_uranus, point_neptune], 
+    ['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'],
+    loc='center left',
+    bbox_to_anchor=(1, 0.84),
+    fancybox=True, 
+    shadow=True, 
+)
 anim = animation.FuncAnimation(fig, func=update, frames=len(earth_x_list), interval=1, blit=True)
 plt.show()
