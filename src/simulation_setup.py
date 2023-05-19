@@ -78,7 +78,7 @@ uranus_x_list, uranus_y_list, uranus_z_list = [], [], []
 neptune_x_list, neptune_y_list, neptune_z_list = [], [], []
 
 # Simulation data
-while time < 30 * 365 * Physics.days_in_secs:
+while time < 165 * 365 * Physics.days_in_secs:
     ###### Mercury ######
     # Mercury G force
     mercury_radius_x, mercury_radius_y, mercury_radius_z = mercury_x - sun_x, mercury_y - sun_y, mercury_z - sun_z
@@ -217,10 +217,56 @@ while time < 30 * 365 * Physics.days_in_secs:
     saturn_y_list.append(saturn_y)
     saturn_z_list.append(saturn_z)
 
+    ###### Uranus ######
+    # Uranus G force
+    uranus_radius_x, uranus_radius_y, uranus_radius_z = uranus_x - sun_x, uranus_y - sun_y, uranus_z - sun_z
+    uranus_magnitude_vector_3 = (uranus_radius_x ** 2 + uranus_radius_y ** 2 + uranus_radius_z ** 2) ** 1.5
+    force_uranus_x = -uranus_gravitational_constant * uranus_radius_x / uranus_magnitude_vector_3
+    force_uranus_y = -uranus_gravitational_constant * uranus_radius_y / uranus_magnitude_vector_3
+    force_uranus_z = -uranus_gravitational_constant * uranus_radius_z / uranus_magnitude_vector_3
+
+    # Update quantities (F = ma -> a = F / m)
+    uranus_velocity_x += force_uranus_x * delta_time / uranus.mass
+    uranus_velocity_y += force_uranus_y * delta_time / uranus.mass
+    uranus_velocity_z += force_uranus_z * delta_time / uranus.mass
+
+    # Update Earth position
+    uranus_x += uranus_velocity_x * delta_time
+    uranus_y += uranus_velocity_y * delta_time
+    uranus_z += uranus_velocity_z * delta_time
+
+    # Save the Earth position
+    uranus_x_list.append(uranus_x)
+    uranus_y_list.append(uranus_y)
+    uranus_z_list.append(uranus_z)
+
+    ###### Neptune ######
+    # Neptune G force
+    neptune_radius_x, neptune_radius_y, neptune_radius_z = neptune_x - sun_x, neptune_y - sun_y, neptune_z - sun_z
+    neptune_magnitude_vector_3 = (neptune_radius_x ** 2 + neptune_radius_y ** 2 + neptune_radius_z ** 2) ** 1.5
+    force_neptune_x = -neptune_gravitational_constant * neptune_radius_x / neptune_magnitude_vector_3
+    force_neptune_y = -neptune_gravitational_constant * neptune_radius_y / neptune_magnitude_vector_3
+    force_neptune_z = -neptune_gravitational_constant * neptune_radius_z / neptune_magnitude_vector_3
+
+    # Update quantities (F = ma -> a = F / m)
+    neptune_velocity_x += force_neptune_x * delta_time / neptune.mass
+    neptune_velocity_y += force_neptune_y * delta_time / neptune.mass
+    neptune_velocity_z += force_neptune_z * delta_time / neptune.mass
+
+    # Update Earth position
+    neptune_x += neptune_velocity_x * delta_time
+    neptune_y += neptune_velocity_y * delta_time
+    neptune_z += neptune_velocity_z * delta_time
+
+    # Save the Earth position
+    neptune_x_list.append(neptune_x)
+    neptune_y_list.append(neptune_y)
+    neptune_z_list.append(neptune_z)
+
     ###### The Sun ######
-    sun_velocity_x += -(force_mercury_x + force_venus_x + force_earth_x + force_mars_x + force_jupiter_x + force_saturn_x) * delta_time / sun.mass
-    sun_velocity_y += -(force_mercury_y + force_venus_y + force_earth_y + force_mars_y + force_jupiter_y + force_saturn_y) * delta_time / sun.mass
-    sun_velocity_z += -(force_mercury_z + force_venus_z + force_earth_z + force_mars_z + force_jupiter_z + force_saturn_z) * delta_time / sun.mass
+    sun_velocity_x += -(force_mercury_x + force_venus_x + force_earth_x + force_mars_x + force_jupiter_x + force_saturn_x + force_uranus_x + force_neptune_x) * delta_time / sun.mass
+    sun_velocity_y += -(force_mercury_y + force_venus_y + force_earth_y + force_mars_y + force_jupiter_y + force_saturn_y + force_uranus_y + force_neptune_y) * delta_time / sun.mass
+    sun_velocity_z += -(force_mercury_z + force_venus_z + force_earth_z + force_mars_z + force_jupiter_z + force_saturn_z + force_uranus_z + force_neptune_z) * delta_time / sun.mass
 
     # Update Sun position
     sun_x += sun_velocity_x * delta_time
@@ -242,4 +288,6 @@ earth_x_data, earth_y_data = [], []
 mars_x_data, mars_y_data = [], []
 jupiter_x_data, jupiter_y_data = [], []
 saturn_x_data, saturn_y_data = [], []
+uranus_x_data, uranus_y_data = [], []
+neptune_x_data, neptune_y_data = [], []
 sun_x_data, sun_y_data = [], []
