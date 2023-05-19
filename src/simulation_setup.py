@@ -2,6 +2,9 @@ from models.Planet import Planet
 from models.Star import Star
 from utils.Physics import Physics
 import math
+
+AU = Physics.AU  # meters
+
 # Celestial Bodies
 sun = Star(1.989e30, 6.957e8, 3.828e29, 5773.15)
 mercury = Planet(3.30104e23, 2.4397e6, 0.20563593, 6.9818e10, 38860)
@@ -12,8 +15,6 @@ jupiter = Planet(1.89813e27, 6.9911e7, 0.04838624, 8.16363e11, 12440, 95, 3)
 saturn = Planet(5.6832e26, 5.8232e7, 0.05386179, 1.506527e9, 9140, 83, 7)
 # uranus = Planet()
 # neptune = Planet()
-
-AU = 1.5e11  # meters
 
 # Gravitational Constants
 mercury_gravitational_constant = Physics.law_of_universial_gravitation(sun.mass, mercury.mass)
