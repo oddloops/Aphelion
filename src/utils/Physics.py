@@ -3,6 +3,8 @@ import math
 class Physics:
     # Constants
     G = 6.67430e-11 # Gravitational Constant (m^3/kg/s^2)
+    SOLAR_MASS = 1.989e30 # in kilograms (kg)
+    AU =  1.496e11  # in meters (m)
     days_in_secs = 24 * 60.0 * 60.0
 
     # Equations
@@ -50,7 +52,7 @@ class Physics:
         return mass * acceleration
 
     @classmethod
-    def law_of_universial_gravitation(cls, mass1, mass2, r):
+    def law_of_universial_gravitation(cls, mass1, mass2, r=1):
         """
         Calculate Newton's Law of Universial Gravitation (F=-G(Mm/r^2))
 
