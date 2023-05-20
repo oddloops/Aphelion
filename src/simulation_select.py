@@ -8,7 +8,7 @@ from simulation_2d import *
 planets = {
     "": 0,
     "Mercury": 0.5,
-    "Venus": 0.7,
+    "Venus": 0.78,
     "Earth": 1.05,
     "Mars": 2,
     "Jupiter": 8,
@@ -17,6 +17,7 @@ planets = {
     "Neptune": 35
 }
 
+# Functions for events
 def on_select_planet():
     global selected_AU
     selected_value = select_planet_var.get()
