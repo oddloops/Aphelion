@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 
 from simulation_setup import *
+from simulation_select import *
 
 # Grab and animate the simulation
 fig, ax = plt.subplots(figsize=(12, 8))
@@ -127,8 +128,8 @@ def update(i):
     text_sun.set_position((sun_x_list[i], sun_y_list[i]))
 
     ax.axis('equal')
-    ax.set_xlim(-31 * AU, 31 * AU)
-    ax.set_ylim(-31 * AU, 31 * AU)
+    ax.set_xlim(-selected_AU * AU, selected_AU * AU)
+    ax.set_ylim(-selected_AU * AU, selected_AU * AU)
 
     return line_mercury, line_venus, line_earth, line_mars, line_jupiter, line_saturn, line_uranus, line_neptune, \
            point_sun, point_mercury, point_venus, point_earth, point_mars, point_jupiter, point_saturn, point_uranus, point_neptune, \
@@ -147,4 +148,5 @@ ax.legend(
     shadow=True, 
 )
 anim = animation.FuncAnimation(fig, func=update, frames=len(earth_x_list), interval=1, blit=True)
+
 plt.show()
