@@ -17,54 +17,54 @@ ax.grid()
 # Mercury object
 mercury_color = "#808080"
 line_mercury, = ax.plot([], [], '-', lw=1, color=mercury_color)
-point_mercury, = ax.plot([], [], marker="o", markersize=3, markeredgecolor=mercury_color, markerfacecolor=mercury_color)
+point_mercury, = ax.plot([], [], marker="o", markersize=3.064, markeredgecolor=mercury_color, markerfacecolor=mercury_color)
 text_mercury = ax.text(mercury.aphelion, 0, 'Mercury')
 
 # Venus object
 venus_color = "#DDBA7D"
 line_venus, = ax.plot([], [], '-', lw=1, color=venus_color)
-point_venus, = ax.plot([], [], marker="o", markersize=5, markeredgecolor=venus_color, markerfacecolor=venus_color)
+point_venus, = ax.plot([], [], marker="o", markersize=7.592, markeredgecolor=venus_color, markerfacecolor=venus_color)
 text_venus = ax.text(venus.aphelion, 0, 'Venus')
 
 # Earth object
 earth_color = "#2C7BB6"  # hex code for greenish blue
 line_earth, = ax.plot([], [], '-', lw=1, color="blue")
-point_earth, = ax.plot([], [], marker="o", markersize=6, markeredgecolor=earth_color, markerfacecolor=earth_color)
+point_earth, = ax.plot([], [], marker="o", markersize=10, markeredgecolor=earth_color, markerfacecolor=earth_color)
 text_earth = ax.text(earth.aphelion, 0, 'Earth')
 
 # Mars object
 mars_color = "#FF0000"
 line_mars, = ax.plot([], [], '-', lw=1, color=mars_color)
-point_mars, = ax.plot([], [], marker="o", markersize=4, markeredgecolor=mars_color, markerfacecolor=mars_color)
+point_mars, = ax.plot([], [], marker="o", markersize=4.256, markeredgecolor=mars_color, markerfacecolor=mars_color)
 text_mars = ax.text(mars.aphelion, 0, 'Mars')
 
 # Jupiter object
 jupiter_color = "#FF4500"
 line_jupiter, = ax.plot([], [], '-', lw=1, color=jupiter_color)
-point_jupiter, = ax.plot([], [], marker="o", markersize=8, markeredgecolor=jupiter_color, markerfacecolor=jupiter_color)
+point_jupiter, = ax.plot([], [], marker="o", markersize=16, markeredgecolor=jupiter_color, markerfacecolor=jupiter_color)
 text_jupiter = ax.text(jupiter.aphelion, 0, 'Jupiter')
 
 # Saturn object
 saturn_color = "#FFD700"
 line_saturn, = ax.plot([], [], '-', lw=1, color=saturn_color)
-point_saturn, = ax.plot([], [], marker="o", markersize=8, markeredgecolor=saturn_color, markerfacecolor=saturn_color)
+point_saturn, = ax.plot([], [], marker="o", markersize=15, markeredgecolor=saturn_color, markerfacecolor=saturn_color)
 text_saturn = ax.text(saturn.aphelion, 0, 'Saturn')
 
 # Uranus object
 uranus_color = "#00FFFF"
 line_uranus, = ax.plot([], [], '-', lw=1, color=uranus_color)
-point_uranus, = ax.plot([], [], marker="o", markersize=8, markeredgecolor=uranus_color, markerfacecolor=uranus_color)
+point_uranus, = ax.plot([], [], marker="o", markersize=13.08, markeredgecolor=uranus_color, markerfacecolor=uranus_color)
 text_uranus = ax.text(uranus.aphelion, 0, 'Uranus')
 
 # Neptune object
 neptune_color = "#0000FF"
 line_neptune, = ax.plot([], [], '-', lw=1, color=neptune_color)
-point_neptune, = ax.plot([], [], marker="o", markersize=8, markeredgecolor=neptune_color, markerfacecolor=neptune_color)
+point_neptune, = ax.plot([], [], marker="o", markersize=13.04, markeredgecolor=neptune_color, markerfacecolor=neptune_color)
 text_neptune = ax.text(neptune.aphelion, 0, 'Neptune')
 
 # Sun object
 sun_color = "#F4F71C"  # hex code for yellow-orange
-point_sun, = ax.plot([], [], marker="o", markersize=16, markeredgecolor=sun_color, markerfacecolor=sun_color)
+point_sun, = ax.plot([], [], marker="o", markersize=20, markeredgecolor=sun_color, markerfacecolor=sun_color)
 text_sun = ax.text(0, 0, 'Sun')
 
 def update(i):
