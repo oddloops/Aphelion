@@ -5,15 +5,12 @@ import sys
 
 from simulation_2d import *
 
-global selected_AU
-selected_AU = 0
-
 planets = {
     "": 0,
     "Mercury": 0.5,
     "Venus": 0.7,
     "Earth": 1.05,
-    "Mars": 1.70,
+    "Mars": 2,
     "Jupiter": 8,
     "Saturn": 12,
     "Uranus": 25,
@@ -31,10 +28,11 @@ def on_select_planet():
 def run_simulation_2d():
     subprocess.run(["python", "src\simulation_2d.py"])
 
-def on_exit():
+def on_close():
     sys.exit()
 
 window = tk.Tk()
+window.protocol("WM_DELETE_WINDOW", on_close)  # Handle window close event
 window.rowconfigure([0, 1], weight=1, minsize=50)
 window.columnconfigure([0, 1], weight=1, minsize=75)
 
@@ -57,6 +55,6 @@ select_planet_dropdown.grid(row=0, column=1, padx=5, pady=5)
 select_planet_button_ok = tk.Button(text="OK!", command=on_select_planet)
 select_planet_button_ok.grid(row=1, column=0, padx=5, pady=5)
 
-select_planet_button_exit = tk.Button(text="Exit", command=on_exit)
+select_planet_button_exit = tk.Button(text="Exit", command=on_close)
 select_planet_button_exit.grid(row=1, column=1, padx=5, pady=5)
 window.mainloop()
