@@ -1,5 +1,4 @@
 from utils.Physics import Physics
-
 from models.CelestialBody import CelestialBody
 
 class Star(CelestialBody):
